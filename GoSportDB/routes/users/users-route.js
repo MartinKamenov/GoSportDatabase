@@ -1,14 +1,15 @@
 const { Router } = require('express');
 const controller = require('./users-controller');
 
-const attach = (app, database) => {
+const attach = (app, userRepository) => {
     // @ts-ignore
     const router = new Router();
     router
         .get('/', (req, res) => {
-            database.showAll('users').then((u) => {
-                res.send(u);
-            });
+            controller.showHome(res);
+        })
+        .post('/login', (req, res) => {
+            controller.login(req, res, userRepository);
         });
     app.use('/', router);
 };
