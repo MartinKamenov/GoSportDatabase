@@ -7,8 +7,8 @@ class UserRepository {
         return this.database.showAll(this.collectionName);
     }
 
-    insertUser(property) {
-        return this.database.insert(this.collectionName, property);
+    insertUser(user) {
+        return this.database.insert(this.collectionName, user);
     }
 
     findUserByCode(code) {
@@ -24,4 +24,4 @@ class UserRepository {
     }
 }
 
-module.exports = PropertyRepository;
+module.exports = UserRepository;
