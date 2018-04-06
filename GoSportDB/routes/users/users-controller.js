@@ -20,7 +20,10 @@ const controller = {
             }
         });
     },
-    logout(){},
-    register(){}
+    register(req, res, userRepository){
+        const password = req.body.password;
+        const username = req.body.username;
+        userRepository.insertUser({users})
+    }
 }
 module.exports = controller;
