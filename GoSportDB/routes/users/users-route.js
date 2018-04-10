@@ -10,7 +10,10 @@ const attach = (app, userRepository) => {
         })
         .post('/login', (req, res) => {
             controller.login(req, res, userRepository);
-        });
+        })
+        .post('/register', (req, res) => {
+            controller.register(req, res, userRepository)});
+        
     app.use('/', router);
 };
 
