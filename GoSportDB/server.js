@@ -16,5 +16,4 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 usersRoute(app, userRepository);
 
-app.listen(5000, () =>
-    console.log(`Magic is running at 5000`));
+app.listen(process.env.PORT || 5000);
