@@ -12,7 +12,11 @@ const attach = (app, userRepository) => {
             controller.login(req, res, userRepository);
         })
         .post('/register', (req, res) => {
-            controller.register(req, res, userRepository)});
+            controller.register(req, res, userRepository);
+        })
+        .get('/users', (req, res) => {
+            controller.showUsers(req, res, userRepository);
+        });
         
     app.use('/', router);
 };

@@ -34,16 +34,34 @@ const controller = {
         const password = req.body.password;
         const city = req.body.city;
         const user = new User(name, id, username, password, city);
-        userRepository.insertUser(user)
-        .then(()=>{
-            res.send("Succesfull");
+        userRepository.findUserByParams({username})
+        .then((users) => {
+            if(users.length > 0){
+                res.send("Username Taken");
+                return;
+            }     
+            userRepository.insertUser(user)
+            .then(()=>{
+                res.send("Succesfull");
+                return;
+            })
+            .catch(()=> {
+                res.send("Error");
+                return;
+            });        
+        })
+                        
+    },
+    showUsers(req, res, userRepository) {
+        userRepository.getAllUsers()
+        .then((users) => {
+            res.send(users);
             return;
         })
         .catch(()=> {
             res.send("Error");
             return;
         });
-                 
     }
 }
 module.exports = controller;
