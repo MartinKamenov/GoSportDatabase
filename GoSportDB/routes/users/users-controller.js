@@ -9,7 +9,7 @@ const controller = {
         
         userRepository.findUserByParams({username, password})
         .then((users)=>{
-            res.send("username: " + username + " pass: " + password + "<br>" + users);
+            res.send(req.body);
             return;
             if(users.length == 0) {
                 res.send("Not found");
