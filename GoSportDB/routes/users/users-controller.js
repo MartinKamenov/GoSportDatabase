@@ -8,9 +8,7 @@ const controller = {
         const password = req.body.password;
         
         userRepository.findUserByParams({username, password})
-        .then((users)=>{
-            res.send(req.body);
-            return;
+        .then((users)=>{           
             if(users.length == 0) {
                 res.send("Not found");
                 return;

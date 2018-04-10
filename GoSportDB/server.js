@@ -12,6 +12,7 @@ const UserRepository = require('./models/repositories/UserRepository');
 const userRepository = new UserRepository(database, 'users');
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 
 usersRoute(app, userRepository);
