@@ -23,4 +23,14 @@ app.use(bodyParser.json());
 usersRoute(app, userRepository, idGenerator);
 eventRoute(app, eventRepository, idGenerator);
 
+setTimeout(function(){ 
+    console.log(idGenerator.getUserId()); 
+    console.log(idGenerator.getUserId()); 
+    console.log(idGenerator.getUserId()); 
+    console.log(idGenerator.getEventId());
+    console.log(idGenerator.getEventId()); 
+    console.log(idGenerator.getEventId()); 
+}, 7000);
+
+
 app.listen(process.env.PORT || 5000);
