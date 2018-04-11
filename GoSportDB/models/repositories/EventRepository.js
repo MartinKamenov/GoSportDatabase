@@ -9,16 +9,12 @@ class EventRepository{
     insertEvent(event) {
         return this.database.insert(this.collectionName, event);
     }
-    findEventByCode(code) {
-        return this.database.find(this.collectionName, { code: code });
-    }
-
     findEventByParams(params) {
         return this.database.find(this.collectionName, params);
     }
 
-    removeEvent(code) {
-        return this.database.delete(this.collectionName, { code: code });
+    removeEvent(id) {
+        return this.database.delete(this.collectionName, {id});
     }
 }
 

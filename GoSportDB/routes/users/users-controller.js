@@ -27,9 +27,9 @@ const controller = {
             return;
         });
     },
-    register(req, res, userRepository){
+    register(req, res, userRepository, idGenerator) {
         const name = req.body.name;
-        const id = req.body.id;
+        const id = idGenerator.getUserId();
         const username = req.body.username;
         const password = req.body.password;
         const city = req.body.city;
