@@ -1,11 +1,10 @@
 class User {
-    constructor (name, id, username, email, password, city) {
-        this.name = name;
+    constructor(email, id, username, password, city) {
+        this.email = email;
         this.id = id;
         this.username = username;
         this.password = password;
         this.city = city;
-        this.email = email;
     }
 }
 module.exports = User;
