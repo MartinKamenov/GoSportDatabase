@@ -40,7 +40,7 @@ const controller = {
                 }
                 userRepository.insertUser(user)
                     .then(() => {
-                        res.send("Succesfull");
+                        res.send("Successful");
                         return;
                     })
                     .catch(() => {
