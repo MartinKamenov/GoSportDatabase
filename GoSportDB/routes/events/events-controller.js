@@ -22,11 +22,11 @@ const controller = {
         const hours = +req.body.hours;
         const minutes = +req.body.minutes;
         const datetime = new Date(year, month, day, hours, minutes);
-        const longitude = req.body.longitude;
-        const latitude = req.body.latitude;
+        const longitude = +req.body.longitude;
+        const latitude = +req.body.latitude;
         const location = new Location(longitude, latitude);
         const adminId = req.body.adminId;
-        const neededPlayers = req.body.neededPlayers;
+        const neededPlayers = +req.body.neededPlayers;
         const players = [];
         players.push(adminId);
         const event = new Event(id, name, sport, datetime,
