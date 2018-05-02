@@ -12,6 +12,21 @@ const controller = {
                 return;
             });
     },
+    showEvent(req, res, eventRepository) {
+        const id = req.params.id;
+        eventRepository.findEventByParams({ id }).then((events) => {
+            if (events.length < 1) {
+                res.send("No event with id: " + id);
+                return;
+            } else if (events.length > 1) {
+                res.send("More than one event with id: " + id);
+                return;
+            }
+
+            res.send(events[0]);
+        });
+        //const events = await Promise.resolve(eventRepository.findEventByParams.bind(eventRepository));
+    },
     createEvent(req, res, eventRepository, idGenerator) {
         const id = idGenerator.getEventId();
         const name = req.body.name;
@@ -40,7 +55,7 @@ const controller = {
                 }
                 eventRepository.insertEvent(event)
                     .then(() => {
-                        res.send("Succesfull");
+                        res.send("Successful");
                         return;
                     })
                     .catch(() => {

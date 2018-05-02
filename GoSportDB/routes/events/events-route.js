@@ -6,6 +6,9 @@ const attach = (app, eventRepository, idGenerator) => {
         .get('/', (req, res) => {
             controller.showEvents(req, res, eventRepository);
         })
+        .get('/:id', (req, res) => {
+            controller.showEvent(req, res, eventRepository);
+        })
         .post('/createEvent', (req, res) => {
             controller.createEvent(req, res, eventRepository, idGenerator);
         })

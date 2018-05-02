@@ -1,4 +1,4 @@
-class EventRepository{
+class EventRepository {
     constructor(database, collectionName) {
         this.collectionName = collectionName;
         this.database = database;
@@ -14,7 +14,7 @@ class EventRepository{
     }
 
     removeEvent(id) {
-        return this.database.delete(this.collectionName, {id});
+        return this.database.delete(this.collectionName, { id });
     }
 }
 
