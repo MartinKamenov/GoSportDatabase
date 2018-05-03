@@ -13,7 +13,7 @@ const controller = {
             });
     },
     showEvent(req, res, eventRepository) {
-        const id = req.params.id;
+        const id = +req.params.id;
         eventRepository.findEventByParams({ id }).then((events) => {
             if (events.length < 1) {
                 res.send("No event with id: " + id);
