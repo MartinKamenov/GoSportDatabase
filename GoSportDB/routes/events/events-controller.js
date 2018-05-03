@@ -23,7 +23,16 @@ const controller = {
                 return;
             }
 
-            res.send(events[0]);
+            const event = {
+                id: events[0].id,
+                name: events[0].name,
+                sport: events[0].sport,
+                datetime: datetime[0].id,
+                location: location[0].location,
+                admin: location[0].admin,
+                players: location[0].players,
+            }
+            res.send(event);
         });
         //const events = await Promise.resolve(eventRepository.findEventByParams.bind(eventRepository));
     },
