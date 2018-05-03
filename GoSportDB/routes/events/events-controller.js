@@ -66,7 +66,7 @@ const controller = {
     },
     addUserToEvent(req, res, eventRepository) {
         const userId = req.body.userId;
-        const eventId = req.body.eventId;
+        const eventId = req.params.id;
         eventRepository.findEventByParams({ id: eventId }).then((events) => {
             if (events.length == 0) {
                 res.send("No event with id: " + eventId);

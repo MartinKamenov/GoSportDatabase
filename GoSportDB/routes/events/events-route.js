@@ -12,7 +12,7 @@ const attach = (app, eventRepository, idGenerator) => {
         .post('/createEvent', (req, res) => {
             controller.createEvent(req, res, eventRepository, idGenerator);
         })
-        .post('/addUserToEvent', (req, res) => {
+        .post('/:id/addUserToEvent', (req, res) => {
             controller.addUserToEvent(req, res, eventRepository);
         });
     app.use('/events', router);
