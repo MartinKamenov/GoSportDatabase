@@ -27,10 +27,10 @@ const controller = {
                 id: events[0].id,
                 name: events[0].name,
                 sport: events[0].sport,
-                datetime: datetime[0].datetime,
-                location: location[0].location,
-                admin: location[0].admin,
-                players: location[0].players,
+                datetime: events[0].datetime,
+                location: events[0].location,
+                admin: events[0].admin,
+                players: events[0].players,
             }
             res.send(event);
         });
