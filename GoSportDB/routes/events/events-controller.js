@@ -1,6 +1,6 @@
 const Event = require('../../models/Event');
 const Location = require('../../models/Location');
-const DateTime = require('../../models/DateTime');
+const datetime = require('../../models/DateTime');
 const controller = {
     showEvents(req, res, eventRepository) {
         eventRepository.getAllEvents()
@@ -46,7 +46,11 @@ const controller = {
         const day = +req.body.day;
         const hours = +req.body.hours;
         const minutes = +req.body.minutes;
-        const datetime = new DataTime(year, month, day, hours, minutes);
+        datetime.year = year;
+        datetime.month = month;
+        datetime.day = day;
+        datetime.houds = hours;
+        datetime.minutes = minutes;
         const longitude = +req.body.longitude;
         const latitude = +req.body.latitude;
         const location = new Location(longitude, latitude);

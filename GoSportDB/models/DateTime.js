@@ -7,5 +7,4 @@ class DateTime {
         this.minute = minute;
     }
 }
-
-module.exports = DateTime;
+module.exports = new DateTime();
