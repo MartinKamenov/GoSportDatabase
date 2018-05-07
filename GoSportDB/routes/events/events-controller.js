@@ -69,7 +69,7 @@ const controller = {
                 }
                 eventRepository.insertEvent(event)
                     .then(() => {
-                        res.send("Successful");
+                        res.send(event);
                         return;
                     })
                     .catch(() => {
