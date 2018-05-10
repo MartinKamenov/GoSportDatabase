@@ -5,7 +5,19 @@ const controller = {
     showEvents(req, res, eventRepository) {
         eventRepository.getAllEvents()
             .then((events) => {
-                res.send(events);
+                const mappedEvents = events.map((e) => {
+                    return {
+                        id: e.id,
+                        name: e.name,
+                        sport: e.sport,
+                        datetime: e.datetime,
+                        location: e.location,
+                        admin: e.admin,
+                        neededPlayers: e.neededPlayers,
+                        players: e.players,
+                    }
+                });
+                res.send(mappedEvents);
                 return;
             })
             .catch(() => {
@@ -31,6 +43,7 @@ const controller = {
                 datetime: events[0].datetime,
                 location: events[0].location,
                 admin: events[0].admin,
+                neededPlayers: events[0].neededPlayers,
                 players: events[0].players,
             }
             res.send(event);
