@@ -80,10 +80,18 @@ const controller = {
 
             const user = foundUsers[0];
 
-            players.push(user);
+            const mappedUser = {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                city: user.city,
+                password: user.password
+            };
+
+            players.push(mappedUser);
 
             const event = new Event(id, name, sport, datetime,
-                location, user, neededPlayers,
+                location, mappedUser, neededPlayers,
                 players);
 
             eventRepository.findEventByParams({ location, sport, datetime })
@@ -115,6 +123,14 @@ const controller = {
             }
             const user = foundUsers[0];
 
+            const mappedUser = {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                city: user.city,
+                password: user.password
+            };
+
             eventRepository.findEventByParams({ id: eventId }).then((events) => {
                 if (events.length == 0) {
                     res.send("No event with id: " + eventId);
@@ -133,7 +149,7 @@ const controller = {
                             return;
                         }
                     }
-                    event.players.push(user);
+                    event.players.push(mappedUser);
                     eventRepository.removeEvent(eventId).then(() => {
                         eventRepository.insertEvent(event).then(() => {
                             res.send(event);
