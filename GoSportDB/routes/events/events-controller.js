@@ -67,7 +67,7 @@ const controller = {
         const longitude = +req.body.longitude;
         const latitude = +req.body.latitude;
         const location = new Location(longitude, latitude);
-        const adminId = req.body.adminId;
+        const adminId = +req.body.adminId;
         const neededPlayers = +req.body.neededPlayers;
         const players = [];
 
@@ -106,7 +106,7 @@ const controller = {
 
     },
     addUserToEvent(req, res, eventRepository, userRepository) {
-        const userId = req.body.userId;
+        const userId = +req.body.userId;
         const eventId = req.params.id;
         userRepository.findUserById(userId).then((foundUsers) => {
             if (foundUsers.length !== 1) {
