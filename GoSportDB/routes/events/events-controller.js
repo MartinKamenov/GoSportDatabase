@@ -107,7 +107,7 @@ const controller = {
     },
     addUserToEvent(req, res, eventRepository, userRepository) {
         const userId = +req.body.userId;
-        const eventId = req.params.id;
+        const eventId = +req.params.id;
         userRepository.findUserById(userId).then((foundUsers) => {
             if (foundUsers.length !== 1) {
                 res.send("Problem with finding user");
