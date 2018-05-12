@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const controller = require('./events-controller');
-const attach = (app, eventRepository, idGenerator) => {
+const attach = (app, eventRepository, userRepository, idGenerator) => {
     const router = new Router();
     router
         .get('/', (req, res) => {
@@ -10,10 +10,10 @@ const attach = (app, eventRepository, idGenerator) => {
             controller.showEvent(req, res, eventRepository);
         })
         .post('/createEvent', (req, res) => {
-            controller.createEvent(req, res, eventRepository, idGenerator);
+            controller.createEvent(req, res, eventRepository, userRepository, idGenerator);
         })
         .post('/:id/addUserToEvent', (req, res) => {
-            controller.addUserToEvent(req, res, eventRepository);
+            controller.addUserToEvent(req, res, eventRepository, userRepository);
         });
     app.use('/events', router);
 }

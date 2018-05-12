@@ -21,6 +21,6 @@ app.use(bodyParser.json());
 
 
 usersRoute(app, userRepository, idGenerator);
-eventRoute(app, eventRepository, idGenerator);
+eventRoute(app, eventRepository, userRepository, idGenerator);
 
 app.listen(process.env.PORT || 5000);
