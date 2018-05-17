@@ -6,7 +6,7 @@ class IdGenerator {
                     this.userId = 0;
                 } else {
                     const sortedUsers = users.sort(a, b => b.id - a.id);
-                    this.userId = +sortedUsers[sortedUsers.length - 1].id;
+                    this.userId = +sortedUsers[sortedUsers.length - 1].id + 1;
                 }
                 eventRepository.getAllEvents()
                     .then((events) => {
@@ -14,7 +14,7 @@ class IdGenerator {
                             this.eventId = 0;
                         } else {
                             const sortedEvents = events.sort(a, b => b.id - a.id);
-                            this.eventId = +sortedEvents[sortedEvents.length - 1].id;
+                            this.eventId = +sortedEvents[sortedEvents.length - 1].id + 1;
                         }
                     })
             });
