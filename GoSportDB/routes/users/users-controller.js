@@ -10,7 +10,7 @@ const controller = {
         userRepository.findUserByParams({ username, password })
             .then((users) => {
                 if (users.length == 0) {
-                    res.send("Not found");
+                    res.send("Invalid username or password");
                     return;
                 } else if (users.length > 1) {
                     res.send("System error: more than 1 user with the same name and pass");
@@ -40,7 +40,7 @@ const controller = {
                 }
                 userRepository.insertUser(user)
                     .then(() => {
-                        res.send("Successful");
+                        res.send(user);
                         return;
                     })
                     .catch(() => {
