@@ -8,7 +8,7 @@ const controller = {
     addMessage(req, res) {
         const message = req.body.message;
         messages.push(message);
-        showMessages(req, res);
+        res.send(messages);
     }
 }
 
