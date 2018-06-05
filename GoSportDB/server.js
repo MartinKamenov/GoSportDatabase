@@ -11,6 +11,7 @@ const EventRepository = require('./models/repositories/EventRepository');
 const IdGenerator = require('./models/IdGenerator');
 const usersRoute = require('./routes/users/users-route');
 const eventRoute = require('./routes/events/events-route');
+const messageRoute = require('./routes/messages/message-route');
 
 const userRepository = new UserRepository(database, 'users');
 const eventRepository = new EventRepository(database, 'events');
@@ -22,5 +23,6 @@ app.use(bodyParser.json());
 
 usersRoute(app, userRepository, idGenerator);
 eventRoute(app, eventRepository, userRepository, idGenerator);
+messageRoute(app);
 
 app.listen(process.env.PORT || 5000);
