@@ -1,15 +1,15 @@
 const { Router } = require('express');
 const controller = require('./message-controller');
 
-const attach = (app) => {
+const attach = (app, MessageRepository) => {
     const router = new Router();
 
     router
-        .get('/', (req, res) => {
-            controller.showMessages(req, res);
+        .get('/:id', (req, res) => {
+            controller.showMessages(req, res, MessageRepository);
         })
-        .post('/addMessage', (req, res) => {
-            controller.addMessage(req, res);
+        .get('/:id/addMessage', (req, res) => {
+            controller.addMessage(req, res, MessageRepository);
         })
 
     app.use('/messages', router);
