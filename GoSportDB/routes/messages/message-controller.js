@@ -48,8 +48,8 @@ const controller = {
             return;
         }
 
-        const username = 'req.body.username';
-        const text = 'req.body.text';
+        const username = req.body.username;
+        const text = req.body.text;
         let date = new Date();
         dateTime.year = date.getFullYear();
         dateTime.month = date.getMonth();

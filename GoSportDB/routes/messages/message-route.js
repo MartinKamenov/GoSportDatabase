@@ -8,7 +8,7 @@ const attach = (app, MessageRepository) => {
         .get('/:id', (req, res) => {
             controller.showMessages(req, res, MessageRepository);
         })
-        .get('/:id/addMessage', (req, res) => {
+        .post('/:id/addMessage', (req, res) => {
             controller.addMessage(req, res, MessageRepository);
         })
 
