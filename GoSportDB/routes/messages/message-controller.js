@@ -62,8 +62,8 @@ const controller = {
         if (!messageCollection) {
             messageRepository.findMessageCollectionById(paramId).then((foundMessageCollections) => {
                 messageCollection = foundMessageCollections[0];
-                messageCollections.push(messageCollection);
                 messageCollection.collection.push(message);
+                messageCollections.push(messageCollection);
                 messageRepository.removeMessageCollection(paramId).then(() => {
                     messageRepository.insertMessageCollection(messageCollection).then(() => {
                         res.send(messageCollection);
