@@ -5,7 +5,17 @@ const controller = {
     showEvents(req, res, eventRepository) {
         eventRepository.getAllEvents()
             .then((events) => {
-                const mappedEvents = events.map((e) => {
+                const now = new Date();
+
+                const filteredEvents = events.filter((e) => {
+                    const date = new Date(e.datetime.year,
+                        e.datetime.month,
+                        e.datetime.dayOfMonth,
+                        e.datetime.hour,
+                        e.datetime.minute, 0, 0);
+                    return now.valueOf() <= date.valueOf();
+                });
+                const mappedEvents = filteredEvents.map((e) => {
                     return {
                         id: e.id,
                         name: e.name,
@@ -111,7 +121,6 @@ const controller = {
                         });
                 });
         });
-
     },
     addUserToEvent(req, res, eventRepository, userRepository) {
         const userId = +req.body.userId;
