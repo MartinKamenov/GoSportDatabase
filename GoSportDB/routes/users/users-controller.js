@@ -31,7 +31,11 @@ const controller = {
         const username = req.body.username;
         const password = req.body.password;
         const city = req.body.city;
-        const user = new User(email, id, username, password, city);
+        const profileImg = req.body.profileImg;
+        // TO DO: Add path as profileImg
+        const fileName = "profile.png";
+        const pathToProfile = "/static/images/profile/" + fileName;
+        const user = new User(email, id, username, password, city, pathToProfile);
         userRepository.findUserByParams({ username })
             .then((users) => {
                 if (users.length > 0) {
@@ -40,6 +44,7 @@ const controller = {
                 }
                 userRepository.insertUser(user)
                     .then(() => {
+                        uploadPicture(profileImg);
                         res.send(user);
                         return;
                     })
@@ -49,6 +54,16 @@ const controller = {
                     });
             })
 
+    },
+    uploadPicture(profileImg) {
+        var base64Data = profileImg.replace(/^data:image\/png;base64,/, "");
+
+        const fileName = "profile.png";
+        const pathToProfile = "/static/images/profile/" + fileName;
+
+        require("fs").writeFile('../..' + pathToProfile, base64Data, 'base64', function(err) {
+            console.log(err);
+        });
     },
     showUsers(req, res, userRepository) {
         userRepository.getAllUsers()

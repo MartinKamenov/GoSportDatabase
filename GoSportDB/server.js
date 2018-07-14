@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const { Router } = require('express');
 const bodyParser = require('body-parser');
 const router = new Router();
@@ -19,9 +20,11 @@ const eventRepository = new EventRepository(database, 'events');
 const messageRepository = new MessageRepository(database, 'messages');
 const idGenerator = new IdGenerator(userRepository, eventRepository);
 
+app.use(express.static(__dirname + '../'));
+app.use('/static', express.static(path.join(__dirname, './static')));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 usersRoute(app, userRepository, idGenerator);
 eventRoute(app, eventRepository, userRepository, idGenerator);
