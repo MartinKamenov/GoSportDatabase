@@ -10,10 +10,9 @@ const attach = (app, MessageRepository) => {
         })
         .post('/:id/addMessage', (req, res) => {
             controller.addMessage(req, res, MessageRepository);
-        })
+        });
 
     app.use('/messages', router);
-
 };
 
 module.exports = attach;
