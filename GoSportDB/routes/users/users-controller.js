@@ -66,9 +66,9 @@ const controller = {
     uploadPicture(profileImg, fileName, res) {
         const pathToProfile = "/static/images/profile/";
 
-        require("fs").writeFile('GoSportDb' + pathToProfile + fileName, profileImg, 'base64', function(err) {
+        require("fs").writeFile('../GoSportDb' + pathToProfile + fileName, profileImg, 'base64', function(err) {
             if (err) {
-                res.send(err);
+                res.send(__filename);
             } else {
                 res.send('Everything is fine');
             }
