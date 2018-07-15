@@ -25,8 +25,8 @@ const idGenerator = new IdGenerator(userRepository, eventRepository);
 app.use(express.static(__dirname + '../'));
 app.use('/static', express.static(path.join(__dirname, './static')));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 usersRoute(app, userRepository, idGenerator);
 eventsRoute(app, eventRepository, userRepository, idGenerator);
