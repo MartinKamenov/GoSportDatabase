@@ -50,13 +50,14 @@ const controller = {
 
         const username = req.body.username;
         const text = req.body.text;
+        const profileImg = req.body.profileImg;
         let date = new Date();
         dateTime.year = date.getFullYear();
         dateTime.month = date.getMonth();
         dateTime.dayOfMonth = date.getDate();
         dateTime.hour = date.getHours();
         dateTime.minute = date.getMinutes();
-        const message = new Message(username, text, dateTime);
+        const message = new Message(username, text, dateTime, profileImg);
 
         let messageCollection = messageCollections.find((c) => c.id === paramId);
         if (!messageCollection) {
