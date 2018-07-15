@@ -66,7 +66,11 @@ const controller = {
     uploadPicture(profileImg, fileName, res) {
         const pathToProfile = "/static/images/profile/";
 
-        require("fs").writeFile('../..' + pathToProfile + fileName, profileImg, 'base64', function(err) {
+        const indexOfEndForFilePath = __filename.indexOf('/routes');
+
+        const fullPath = __filename.slice(0, indexOfEndForFilePath) + pathToProfile;
+
+        require("fs").writeFile(fullPath + fileName, profileImg, 'base64', function(err) {
             if (err) {
                 res.send(err);
             } else {
