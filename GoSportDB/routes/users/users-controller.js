@@ -48,9 +48,8 @@ const controller = {
                 }
 
                 if (profileImg) {
-                    this.uploadPicture(profileImg, fileName, res);
+                    this.uploadPicture(profileImg, fileName);
                 }
-                return;
                 userRepository.insertUser(user)
                     .then(() => {
                         res.send(user);
@@ -63,7 +62,7 @@ const controller = {
             })
 
     },
-    uploadPicture(profileImg, fileName, res) {
+    uploadPicture(profileImg, fileName) {
         const pathToProfile = "/static/images/profile/";
 
         const indexOfEndForFilePath = __filename.indexOf('/routes');
@@ -72,9 +71,7 @@ const controller = {
 
         require("fs").writeFile(fullPath + fileName, profileImg, 'base64', function(err) {
             if (err) {
-                res.send(err);
-            } else {
-                res.send('Everything is fine');
+                console.log(err);
             }
         });
     },
