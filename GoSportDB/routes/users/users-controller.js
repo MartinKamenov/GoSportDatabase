@@ -32,6 +32,8 @@ const controller = {
         const password = req.body.password;
         const city = req.body.city;
         const profileImg = req.body.profileImg;
+        res.send(profileImg);
+        return;
         let fileName;
         if (!profileImg) {
             fileName = 'default' + '.jpg';
