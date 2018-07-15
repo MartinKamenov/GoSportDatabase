@@ -17,7 +17,7 @@ const attach = (app, userRepository, idGenerator) => {
         .get('/users', (req, res) => {
             controller.showUsers(req, res, userRepository);
         });
-        
+
     app.use('/', router);
 };
 

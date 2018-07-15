@@ -32,8 +32,12 @@ const controller = {
         const password = req.body.password;
         const city = req.body.city;
         const profileImg = req.body.profileImg;
-        // TO DO: Add path as profileImg
-        const fileName = "profile.png";
+        let fileName;
+        if (!profileImg) {
+            fileName = 'default' + '.jpg';
+        } else {
+            fileName = username + '.jpg';
+        }
         const pathToProfile = "/static/images/profile/" + fileName;
         const user = new User(email, id, username, password, city, pathToProfile);
         userRepository.findUserByParams({ username })
@@ -42,9 +46,12 @@ const controller = {
                     res.send("Username Taken");
                     return;
                 }
+
+                if (!profileImg) {
+                    this.uploadPicture(profileImg, fileName);
+                }
                 userRepository.insertUser(user)
                     .then(() => {
-                        uploadPicture(profileImg);
                         res.send(user);
                         return;
                     })
@@ -55,14 +62,13 @@ const controller = {
             })
 
     },
-    uploadPicture(profileImg) {
-        var base64Data = profileImg.replace(/^data:image\/png;base64,/, "");
+    uploadPicture(profileImg, fileName) {
+        const pathToProfile = "/static/images/profile/";
 
-        const fileName = "profile.png";
-        const pathToProfile = "/static/images/profile/" + fileName;
-
-        require("fs").writeFile('../..' + pathToProfile, base64Data, 'base64', function(err) {
-            console.log(err);
+        require("fs").writeFile('./GoSportDb' + pathToProfile + fileName, profileImg, 'base64', function(err) {
+            if (err) {
+                console.log(err);
+            }
         });
     },
     showUsers(req, res, userRepository) {
