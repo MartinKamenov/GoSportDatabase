@@ -47,7 +47,7 @@ const controller = {
                     return;
                 }
 
-                if (!profileImg) {
+                if (profileImg) {
                     this.uploadPicture(profileImg, fileName);
                 }
                 userRepository.insertUser(user)
