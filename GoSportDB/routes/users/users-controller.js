@@ -62,6 +62,33 @@ const controller = {
             })
 
     },
+    facebookLogin(req, res, userRepository, idGenerator) {
+        const email = req.body.email;
+        const id = idGenerator.getUserId();
+        const username = req.body.username;
+        const profileImg = req.body.pictureUrl;
+        userRepository.findUserByParams({ username }).then((users) => {
+            if (users.length > 1) {
+                res.send('Error: More than one user with this username.');
+                return
+            }
+            if (users.length === 0) {
+                const user = new User(email, id, username, null, null, profileImg);
+                userRepository.insertUser(user)
+                    .then(() => {
+                        res.send(user);
+                        return;
+                    })
+                    .catch(() => {
+                        res.send("Error");
+                        return;
+                    });
+            } else if (users.length === 1) {
+                res.send(users[0]);
+                return;
+            }
+        });
+    },
     uploadPicture(profileImg, fileName) {
         const pathToProfile = "/static/images/profile/";
 
