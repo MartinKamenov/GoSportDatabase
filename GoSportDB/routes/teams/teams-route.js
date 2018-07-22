@@ -7,6 +7,9 @@ const attach = (app, teamRepository) => {
     router
         .get('/', (req, res) => {
             controller.showAllTeams(req, res, teamRepository);
+        })
+        .post('/addTeam', (req, res) => {
+            controller.addTeam(req, res, teamRepository);
         });
 
     app.use('/teams', router);

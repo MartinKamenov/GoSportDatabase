@@ -7,8 +7,8 @@ class TeamRepository {
         return this.database.showAll(this.collectionName);
     }
 
-    insertTeam(user) {
-        return this.database.insert(this.collectionName, user);
+    insertTeam(team) {
+        return this.database.insert(this.collectionName, team);
     }
 
     findTeamById(id) {
