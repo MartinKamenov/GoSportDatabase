@@ -96,6 +96,7 @@ const controller = {
                 email: user.email,
                 username: user.username,
                 city: user.city,
+                profileImg: user.profileImg,
                 password: user.password
             };
 
