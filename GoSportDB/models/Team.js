@@ -1,5 +1,6 @@
 class Team {
-    constructor(name, sport, players, pictureUrl, datetime) {
+    constructor(id, name, sport, players, pictureUrl, datetime) {
+        this.id = id;
         this.name = name;
         this.sport = sport;
         this.players = players;

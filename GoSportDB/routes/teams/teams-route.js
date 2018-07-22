@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const controller = require('./teams-controller');
 
-const attach = (app, teamRepository) => {
+const attach = (app, teamRepository, userRepository, idGenerator) => {
     const router = new Router();
 
     router
@@ -9,7 +9,7 @@ const attach = (app, teamRepository) => {
             controller.showAllTeams(req, res, teamRepository);
         })
         .post('/addTeam', (req, res) => {
-            controller.addTeam(req, res, teamRepository);
+            controller.addTeam(req, res, teamRepository, userRepository, idGenerator);
         });
 
     app.use('/teams', router);

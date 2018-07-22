@@ -20,7 +20,7 @@ const userRepository = new UserRepository(database, 'users');
 const eventRepository = new EventRepository(database, 'events');
 const messageRepository = new MessageRepository(database, 'messages');
 const teamRepository = new TeamRepository(database, 'teams');
-const idGenerator = new IdGenerator(userRepository, eventRepository);
+const idGenerator = new IdGenerator(userRepository, eventRepository, teamRepository);
 
 app.use(express.static(__dirname + '../'));
 app.use('/static', express.static(path.join(__dirname, './static')));
@@ -31,6 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 usersRoute(app, userRepository, idGenerator);
 eventsRoute(app, eventRepository, userRepository, idGenerator);
 messageRoute(app, messageRepository);
-teamsRoute(app, teamRepository);
+teamsRoute(app, teamRepository, userRepository, idGenerator);
 
 app.listen(process.env.PORT || 5000);
