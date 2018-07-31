@@ -1,4 +1,6 @@
 const datetime = require('../../models/DateTime');
+const Team = require('../../models/Team');
+
 const controller = {
     showAllTeams(req, res, teamRepository) {
         teamRepository.getAllTeams().then((teams) => {
