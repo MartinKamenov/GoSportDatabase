@@ -30,7 +30,7 @@ const controller = {
         const pathToProfile = "/static/images/profile/" + fileName;
 
         userRepository.findUserById(adminId).then((foundUsers) => {
-            if (foundUsers.length < 1 || foundUsers.length > 1) {
+            if (foundUsers.length === 1) {
                 res.send('Error: more or less than one user found');
                 return;
             }
