@@ -13,7 +13,7 @@ const controller = {
         const name = req.body.name;
         const sport = req.body.sport;
         const players = [];
-        const adminId = req.body.adminId;
+        const adminId = +req.body.adminId;
         const date = new Date();
         datetime.year = date.getFullYear();
         datetime.month = date.getMonth();
@@ -25,12 +25,12 @@ const controller = {
         if (!imageString) {
             fileName = 'default' + '.jpg';
         } else {
-            fileName = username + '.jpg';
+            fileName = name + '.jpg';
         }
-        const pathToProfile = "/static/images/profile/" + fileName;
+        const pathToProfile = "/static/images/logos/" + fileName;
 
         userRepository.findUserById(adminId).then((foundUsers) => {
-            if (foundUsers.length === 1) {
+            if (foundUsers.length !== 1) {
                 res.send('Error: more or less than one user found');
                 return;
             }
@@ -39,17 +39,12 @@ const controller = {
 
             const team = new Team(id, name, sport, players, pathToProfile, datetime);
 
-            teamRepository.insertTeam(team)
-                .then((foundTeam) => {
-                    if (!foundTeam.length) {
-                        res.send('Error: No team has been added');
-                        return;
-                    }
-
+            teamRepository.insertTeam()
+                .then((allTeams) => {
                     if (imageString) {
                         this.uploadPicture(imageString, fileName);
                     }
-                    res.send(foundTeam[foundTeam.length - 1]);
+                    res.send(foundTeam[allTeams.length - 1]);
                     return;
                 });
         });
