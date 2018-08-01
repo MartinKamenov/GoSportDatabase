@@ -39,7 +39,7 @@ const controller = {
 
             const team = new Team(id, name, sport, players, pathToProfile, datetime);
 
-            teamRepository.insertTeam()
+            teamRepository.insertTeam(team)
                 .then((allTeams) => {
                     if (imageString) {
                         this.uploadPicture(imageString, fileName);
