@@ -53,7 +53,7 @@ const controller = {
     uploadPicture(img, fileName) {
         const pathToProfile = "/static/images/logos/";
 
-        const indexOfEndForFilePath = __filename.indexOf('/routes');
+        const indexOfEndForFilePath = __filename.indexOf('\routes');
 
         const fullPath = __filename.slice(0, indexOfEndForFilePath) + pathToProfile;
 
