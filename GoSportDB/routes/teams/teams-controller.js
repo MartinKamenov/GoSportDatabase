@@ -44,7 +44,7 @@ const controller = {
                     if (imageString) {
                         this.uploadPicture(imageString, fileName);
                     }
-                    res.send(foundTeam[allTeams.length - 1]);
+                    res.send(allTeams[allTeams.length - 1]);
                     return;
                 });
         });
