@@ -10,6 +10,10 @@ const controller = {
 
     addTeam(req, res, teamRepository, userRepository, idGenerator) {
         const id = idGenerator.getTeamId();
+        if (!id) {
+            res.send('Error with id');
+            return;
+        }
         const name = req.body.name;
         const sport = req.body.sport;
         const players = [];
@@ -25,7 +29,7 @@ const controller = {
         if (!imageString) {
             fileName = 'default' + '.jpg';
         } else {
-            fileName = name + '.jpg';
+            fileName = name + id + '.jpg';
         }
         const pathToProfile = "/static/images/logos/" + fileName;
 
