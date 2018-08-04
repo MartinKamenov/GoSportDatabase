@@ -39,21 +39,18 @@ const controller = {
 
             const team = new Team(id, name, sport, players, pathToProfile, datetime);
 
-            this.uploadPicture(imageString, fileName, res);
-            return;
-
-            /*teamRepository.insertTeam(team)
+            teamRepository.insertTeam(team)
                 .then((allTeams) => {
                     if (imageString) {
                         this.uploadPicture(imageString, fileName);
                     }
                     res.send(allTeams[allTeams.length - 1]);
                     return;
-                });*/
+                });
         });
     },
 
-    uploadPicture(img, fileName, res) {
+    uploadPicture(img, fileName) {
         const pathToProfile = "/static/images/logos/";
 
         const indexOfEndForFilePath = __filename.indexOf('routes') - 1;
@@ -62,7 +59,7 @@ const controller = {
 
         require("fs").writeFile(fullPath + fileName, img, 'base64', function(err) {
             if (err) {
-                res.send(indexOfEndForFilePath + "\n" + fullPath + fileName + "\n" + err);
+                console.log(err);
             }
         });
     }
