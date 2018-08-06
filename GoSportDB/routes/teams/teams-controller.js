@@ -17,6 +17,7 @@ const controller = {
         const name = req.body.name;
         const sport = req.body.sport;
         const players = [];
+        const requestingPlayers = [];
         const adminId = +req.body.adminId;
         const date = new Date();
         datetime.year = date.getFullYear();
@@ -41,7 +42,7 @@ const controller = {
             const admin = foundUsers[0];
             players.push(admin);
 
-            const team = new Team(id, name, sport, players, pathToProfile, datetime);
+            const team = new Team(id, name, sport, players, requestingPlayers, pathToProfile, datetime);
 
             teamRepository.insertTeam(team)
                 .then((allTeams) => {
@@ -66,6 +67,19 @@ const controller = {
                 console.log(err);
             }
         });
+    },
+    showTeam(req, res, teamRepository) {
+        const id = +req.params.id;
+        teamRepository.findTeamById(id).then((foundTeams) => {
+            if (foundTeams.length !== 1) {
+                res.send('Problem with teams count');
+                return;
+            }
+            res.send(foundTeams[0]);
+        });
+    },
+    requestJoin(req, res, teamRepository, userRepository) {
+
     }
 }
 

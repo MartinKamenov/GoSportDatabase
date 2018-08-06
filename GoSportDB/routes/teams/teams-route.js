@@ -10,6 +10,9 @@ const attach = (app, teamRepository, userRepository, idGenerator) => {
         })
         .post('/addTeam', (req, res) => {
             controller.addTeam(req, res, teamRepository, userRepository, idGenerator);
+        })
+        .get('/:id', (req, res) => {
+            controller.showTeam(req, res, teamRepository);
         });
 
     app.use('/teams', router);
