@@ -29,7 +29,7 @@ const controller = {
         if (!imageString) {
             fileName = 'default' + '.jpg';
         } else {
-            fileName = name + id + '.jpg';
+            fileName = id + '.jpg';
         }
         const pathToProfile = "/static/images/logos/" + fileName;
 
