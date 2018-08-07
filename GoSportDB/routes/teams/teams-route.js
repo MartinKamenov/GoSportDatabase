@@ -11,12 +11,17 @@ const attach = (app, teamRepository, userRepository, idGenerator) => {
         .post('/addTeam', (req, res) => {
             controller.addTeam(req, res, teamRepository, userRepository, idGenerator);
         })
+        .post('/request/:id', (req, res) => {
+            controller.requestJoin(req, res, teamRepository, userRepository);
+        })
+        .post('/join/:id', (req, res) => {
+            controller.joinPlayer(req, res, teamRepository, userRepository);
+        })
         .get('/:id', (req, res) => {
             controller.showTeam(req, res, teamRepository);
         });
 
     app.use('/teams', router);
-
 };
 
 module.exports = attach;

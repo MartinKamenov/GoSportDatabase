@@ -79,7 +79,45 @@ const controller = {
         });
     },
     requestJoin(req, res, teamRepository, userRepository) {
-
+        const userId = +req.body.id;
+        const teamId = +req.params.id;
+        userRepository.findUserById(userId).then(foundUsers => {
+            const user = foundUser[0];
+            teamRepository.findTeamById(teamId).then(foundTeams => {
+                const team = foundTeams[0];
+                if (team.requestingPlayers.find(r.id === user.id)) {
+                    res.send('Player has already requested to join');
+                    return;
+                }
+                team.requestingPlayers.push(user);
+                teamRepository.removeTeam(teamId).then(() => {
+                    teamRepository.insertTeam(team).then((teams) => {
+                        res.send(teams[0]);
+                    });
+                })
+            });
+        })
+    },
+    joinPlayer(req, res, teamRepository, userRepository) {
+        const userId = +req.body.id;
+        const teamId = +req.params.id;
+        userRepository.findUserById(userId).then(foundUsers => {
+            const user = foundUser[0];
+            teamRepository.findTeamById(teamId).then(foundTeams => {
+                const team = foundTeams[0];
+                if (team.players.find(r.id === user.id)) {
+                    res.send('Player has already joined');
+                    return;
+                }
+                team.requestingPlayers.filter(r => r.id !== user.id);
+                team.players.push(user);
+                teamRepository.removeTeam(teamId).then(() => {
+                    teamRepository.insertTeam(team).then((teams) => {
+                        res.send(teams[0]);
+                    });
+                })
+            });
+        })
     }
 }
 
