@@ -82,7 +82,7 @@ const controller = {
         const userId = +req.body.id;
         const teamId = +req.params.id;
         userRepository.findUserById(userId).then(foundUsers => {
-            const user = foundUser[0];
+            const user = foundUsers[0];
             teamRepository.findTeamById(teamId).then(foundTeams => {
                 const team = foundTeams[0];
                 if (team.requestingPlayers.find(r.id === user.id)) {
@@ -102,7 +102,7 @@ const controller = {
         const userId = +req.body.id;
         const teamId = +req.params.id;
         userRepository.findUserById(userId).then(foundUsers => {
-            const user = foundUser[0];
+            const user = foundUsers[0];
             teamRepository.findTeamById(teamId).then(foundTeams => {
                 const team = foundTeams[0];
                 if (team.players.find(r.id === user.id)) {
