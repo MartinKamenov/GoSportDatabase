@@ -85,7 +85,7 @@ const controller = {
             const user = foundUsers[0];
             teamRepository.findTeamById(teamId).then(foundTeams => {
                 const team = foundTeams[0];
-                if (team.requestingPlayers.find(r.id === user.id)) {
+                if (team.requestingPlayers.find(r => r.id === user.id)) {
                     res.send('Player has already requested to join');
                     return;
                 }
