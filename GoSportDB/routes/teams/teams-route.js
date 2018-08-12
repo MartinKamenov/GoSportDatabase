@@ -17,6 +17,9 @@ const attach = (app, teamRepository, userRepository, idGenerator) => {
         .post('/join/:id', (req, res) => {
             controller.joinPlayer(req, res, teamRepository, userRepository);
         })
+        .post('/reject/:id', (req, res) => {
+            controller.rejectPlayer(req, res, teamRepository, userRepository);
+        })
         .get('/:id', (req, res) => {
             controller.showTeam(req, res, teamRepository);
         });

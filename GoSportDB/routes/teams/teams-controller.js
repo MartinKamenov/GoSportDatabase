@@ -128,7 +128,23 @@ const controller = {
                     });
                 });
             });
-        })
+        });
+    },
+    rejectPlayer(req, res, teamRepository, userRepository) {
+        const userId = +req.body.id;
+        const teamId = +req.params.id;
+        userRepository.findUserById(userId).then(foundUsers => {
+            const user = foundUsers[0];
+            teamRepository.findTeamById(teamId).then(foundTeams => {
+                const team = foundTeams[0];
+                team.requestingPlayers.filter(r => r.id !== user.id);
+                teamRepository.removeTeam(teamId).then(() => {
+                    teamRepository.insertTeam(team).then((teams) => {
+                        res.send(teams[0]);
+                    });
+                });
+            });
+        });
     }
 }
 
