@@ -110,12 +110,23 @@ const controller = {
                     return;
                 }
                 team.requestingPlayers.filter(r => r.id !== user.id);
-                team.players.push(user);
+                team.players.push({
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    city: user.city,
+                    profileImg: user.profileImg
+                });
                 teamRepository.removeTeam(teamId).then(() => {
                     teamRepository.insertTeam(team).then((teams) => {
-                        res.send(teams[0]);
+                        user.teams.push(team);
+                        userRepository.removeUser(user.id).then(() => {
+                            userRepository.insertUser(user).then(() => {
+                                res.send(teams[0]);
+                            });
+                        });
                     });
-                })
+                });
             });
         })
     }

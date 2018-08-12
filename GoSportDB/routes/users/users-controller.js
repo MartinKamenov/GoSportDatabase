@@ -39,7 +39,7 @@ const controller = {
             fileName = username + '.jpg';
         }
         const pathToProfile = "/static/images/profile/" + fileName;
-        const user = new User(email, id, username, password, city, pathToProfile);
+        const user = new User(email, id, username, password, city, pathToProfile, [], []);
         userRepository.findUserByParams({ username })
             .then((users) => {
                 if (users.length > 0) {
@@ -73,7 +73,7 @@ const controller = {
                 return
             }
             if (users.length === 0) {
-                const user = new User(email, id, username, null, null, profileImg);
+                const user = new User(email, id, username, null, null, profileImg, [], []);
                 userRepository.insertUser(user)
                     .then(() => {
                         res.send(user);
