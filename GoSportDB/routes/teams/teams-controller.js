@@ -137,7 +137,8 @@ const controller = {
             const user = foundUsers[0];
             teamRepository.findTeamById(teamId).then(foundTeams => {
                 const team = foundTeams[0];
-                team.requestingPlayers.filter(r => r.id !== user.id);
+                const newRequestingPlayers = team.requestingPlayers.filter(r => r.id !== user.id);
+                team.requestingPlayers = newRequestingPlayers;
                 teamRepository.removeTeam(teamId).then(() => {
                     teamRepository.insertTeam(team).then((teams) => {
                         res.send(teams[0]);
