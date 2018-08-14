@@ -112,6 +112,16 @@ const controller = {
                 res.send("Error");
                 return;
             });
+    },
+    showUser(req, res, userRepository) {
+        const id = +req.params.id;
+        userRepository.findUserById(id).then((foundUsers) => {
+            if (foundUsers.length !== 1) {
+                res.send('No users with this id found');
+                return;
+            }
+            res.send(foundUsers[0]);
+        });
     }
 }
 module.exports = controller;

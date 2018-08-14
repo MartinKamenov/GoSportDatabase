@@ -17,6 +17,9 @@ const attach = (app, userRepository, idGenerator) => {
         .get('/users', (req, res) => {
             controller.showUsers(req, res, userRepository);
         })
+        .get('/users/:id', (req, res) => {
+            controller.showUser(req, res, userRepository);
+        })
         .post('/facebooklogin', (req, res) => {
             controller.facebookLogin(req, res, userRepository, idGenerator);
         });
