@@ -105,11 +105,12 @@ const controller = {
             const user = foundUsers[0];
             teamRepository.findTeamById(teamId).then(foundTeams => {
                 const team = foundTeams[0];
-                if (team.players.find(r.id === user.id)) {
+                if (team.players.find(p => p.id === user.id)) {
                     res.send('Player has already joined');
                     return;
                 }
-                team.requestingPlayers.filter(r => r.id !== user.id);
+                const newRequestingPlayers = team.requestingPlayers.filter(r => r.id !== user.id);
+                team.requestingPlayers = newRequestingPlayers;
                 team.players.push({
                     id: user.id,
                     username: user.username,
@@ -118,11 +119,11 @@ const controller = {
                     profileImg: user.profileImg
                 });
                 teamRepository.removeTeam(teamId).then(() => {
-                    teamRepository.insertTeam(team).then((teams) => {
+                    teamRepository.insertTeam(team).then(() => {
                         user.teams.push(team);
                         userRepository.removeUser(user.id).then(() => {
                             userRepository.insertUser(user).then(() => {
-                                res.send(teams[0]);
+                                res.send(team);
                             });
                         });
                     });
@@ -140,8 +141,8 @@ const controller = {
                 const newRequestingPlayers = team.requestingPlayers.filter(r => r.id !== user.id);
                 team.requestingPlayers = newRequestingPlayers;
                 teamRepository.removeTeam(teamId).then(() => {
-                    teamRepository.insertTeam(team).then((teams) => {
-                        res.send(teams[0]);
+                    teamRepository.insertTeam(team).then(() => {
+                        res.send(team);
                     });
                 });
             });
