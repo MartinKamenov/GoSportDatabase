@@ -39,7 +39,14 @@ const controller = {
                 res.send('Error: more or less than one user found');
                 return;
             }
-            const admin = foundUsers[0];
+            const user = foundUsers[0];
+            const admin = {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                city: user.city,
+                profileImg: user.profileImg
+            };
             players.push(admin);
 
             const team = new Team(id, name, sport, players, requestingPlayers, pathToProfile, datetime);
@@ -49,8 +56,13 @@ const controller = {
                     if (imageString) {
                         this.uploadPicture(imageString, fileName);
                     }
-                    res.send(allTeams[allTeams.length - 1]);
-                    return;
+                    user.teams.push(team);
+                    userRepository.removeUser(user.id).then(() => {
+                        userRepository.insertUser(user).then(() => {
+                            res.send(allTeams[allTeams.length - 1]);
+                            return;
+                        });
+                    });
                 });
         });
     },
