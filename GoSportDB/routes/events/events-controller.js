@@ -172,8 +172,13 @@ const controller = {
                     event.players.push(mappedUser);
                     eventRepository.removeEvent(eventId).then(() => {
                         eventRepository.insertEvent(event).then(() => {
-                            res.send(event);
-                            return;
+                            user.events.push(event);
+                            userRepository.removeUser(user.id).then(() => {
+                                userRepository.insertUser(user).then(() => {
+                                    res.send(event);
+                                    return;
+                                });
+                            });
                         });
                     });
                 } else {
