@@ -1,7 +1,11 @@
 const User = require('../../models/User');
 const controller = {
     showHome(res) {
-        res.send("Hello");
+        res.send(`
+        <h1 style='text-align: center; border: 3px solid red; color: black;'>
+            The official api of GoSport
+        </h1>
+        `);
     },
     login(req, res, userRepository) {
         const username = req.body.username;
