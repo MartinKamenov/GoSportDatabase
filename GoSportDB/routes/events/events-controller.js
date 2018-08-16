@@ -96,11 +96,12 @@ const controller = {
                 email: user.email,
                 username: user.username,
                 city: user.city,
-                profileImg: user.profileImg,
-                password: user.password
+                profileImg: user.profileImg
             };
 
             players.push(mappedUser);
+
+
 
             const event = new Event(id, name, sport, datetime,
                 location, mappedUser, neededPlayers,
@@ -112,15 +113,21 @@ const controller = {
                         res.send("Event already exists");
                         return;
                     }
-                    eventRepository.insertEvent(event)
-                        .then(() => {
-                            res.send(event);
-                            return;
-                        })
-                        .catch(() => {
-                            res.send("Error");
-                            return;
+
+                    user.events.push(event);
+                    userRepository.removeUser(user.id).then(() => {
+                        userRepository.insertUser(user).then(() => {
+                            eventRepository.insertEvent(event)
+                                .then(() => {
+                                    res.send(event);
+                                    return;
+                                })
+                                .catch(() => {
+                                    res.send("Error");
+                                    return;
+                                });
                         });
+                    });
                 });
         });
     },
