@@ -44,7 +44,7 @@ const controller = {
         }
         const pathToProfile = "/static/images/profile/" + fileName;
         const user = new User(email, id, username, password, city, pathToProfile, [], []);
-        userRepository.findUserByParams({ username })
+        userRepository.findUserByParams({ email })
             .then((users) => {
                 if (users.length > 0) {
                     res.send("Username Taken");
