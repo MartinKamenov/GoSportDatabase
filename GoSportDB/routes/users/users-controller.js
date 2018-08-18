@@ -71,7 +71,7 @@ const controller = {
         const id = idGenerator.getUserId();
         const username = req.body.username;
         const profileImg = req.body.pictureUrl;
-        userRepository.findUserByParams({ username }).then((users) => {
+        userRepository.findUserByParams({ email }).then((users) => {
             if (users.length > 1) {
                 res.send('Error: More than one user with this username.');
                 return
