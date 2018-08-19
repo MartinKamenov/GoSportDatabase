@@ -52,14 +52,14 @@ const controller = {
             const team = new Team(id, name, sport, players, requestingPlayers, pathToProfile, datetime);
 
             teamRepository.insertTeam(team)
-                .then((allTeams) => {
+                .then(() => {
                     if (imageString) {
                         this.uploadPicture(imageString, fileName);
                     }
                     user.teams.push(team);
                     userRepository.removeUser(user.id).then(() => {
                         userRepository.insertUser(user).then(() => {
-                            res.send(allTeams[allTeams.length - 1]);
+                            res.send(team);
                             return;
                         });
                     });
