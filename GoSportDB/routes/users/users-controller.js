@@ -22,7 +22,7 @@ const controller = {
                     return;
                 } else {
                     const user = users[0];
-                    if (user.token !== token) {
+                    if (token && user.token !== token) {
                         user.token = token;
                         userRepository.removeUser(user.id).then(() => {
                             userRepository.insertUser(user).then(() => {
@@ -101,7 +101,17 @@ const controller = {
                         return;
                     });
             } else if (users.length === 1) {
-                res.send(users[0]);
+                const user = users[0];
+                if (token && user.token !== token) {
+                    user.token = token;
+                    userRepository.removeUser(user.id).then(() => {
+                        userRepository.insertUser(user).then(() => {
+                            res.send(user);
+                            return;
+                        });
+                    })
+                }
+                res.send(user);
                 return;
             }
         });
