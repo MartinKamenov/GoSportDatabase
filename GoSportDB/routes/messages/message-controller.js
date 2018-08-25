@@ -51,13 +51,15 @@ const controller = {
         const username = req.body.username;
         const text = req.body.text;
         const profileImg = req.body.profileImg;
+        const token = req.body.token;
+
         let date = new Date();
         dateTime.year = date.getFullYear();
         dateTime.month = date.getMonth();
         dateTime.dayOfMonth = date.getDate();
         dateTime.hour = date.getHours();
         dateTime.minute = date.getMinutes();
-        const message = new Message(username, text, dateTime, profileImg);
+        const message = new Message(username, text, dateTime, profileImg, token);
 
         let messageCollection = messageCollections.find((c) => c.id === paramId);
         if (!messageCollection) {
@@ -81,6 +83,17 @@ const controller = {
                 });
             });
         }
+    },
+    notifyOtherUsers(messageCollection, message) {
+        function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
+        }
+        const uniqueTokens = messageCollection.map((m) => m.token).filter(onlyUnique);
+        uniqueTokens.forEach(token => {
+            if (token !== message.token) {
+                // Notify users
+            }
+        });
     }
 }
 

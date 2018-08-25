@@ -10,6 +10,7 @@ const controller = {
     login(req, res, userRepository) {
         const username = req.body.username;
         const password = req.body.password;
+        const token = req.body.token;
 
         userRepository.findUserByParams({ username, password })
             .then((users) => {
@@ -20,7 +21,17 @@ const controller = {
                     res.send("System error: more than 1 user with the same name and pass");
                     return;
                 } else {
-                    res.send(users[0]);
+                    const user = users[0];
+                    if (user.token !== token) {
+                        user.token = token;
+                        userRepository.removeUser(user.id).then(() => {
+                            userRepository.insertUser(user).then(() => {
+                                res.send(user);
+                                return;
+                            });
+                        })
+                    }
+                    res.send(user);
                     return;
                 }
             })
@@ -36,6 +47,7 @@ const controller = {
         const password = req.body.password;
         const city = req.body.city;
         const profileImg = req.body.profileImg;
+        const token = req.body.token;
         let fileName;
         if (!profileImg) {
             fileName = 'default' + '.jpg';
@@ -43,7 +55,7 @@ const controller = {
             fileName = username + '.jpg';
         }
         const pathToProfile = "/static/images/profile/" + fileName;
-        const user = new User(email, id, username, password, city, pathToProfile, [], []);
+        const user = new User(email, id, username, password, city, pathToProfile, [], [], token);
         userRepository.findUserByParams({ email })
             .then((users) => {
                 if (users.length > 0) {
@@ -71,13 +83,14 @@ const controller = {
         const id = idGenerator.getUserId();
         const username = req.body.username;
         const profileImg = req.body.pictureUrl;
+        const token = req.body.token;
         userRepository.findUserByParams({ email }).then((users) => {
             if (users.length > 1) {
                 res.send('Error: More than one user with this username.');
                 return
             }
             if (users.length === 0) {
-                const user = new User(email, id, username, null, null, profileImg, [], []);
+                const user = new User(email, id, username, null, null, profileImg, [], [], token);
                 userRepository.insertUser(user)
                     .then(() => {
                         res.send(user);
