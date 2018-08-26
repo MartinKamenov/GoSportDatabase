@@ -10,8 +10,6 @@ const service = {
         };
 
         this.sendMessage(message);
-
-        this.sendMessage(message);
     },
 
     createAndSendMessages(title, body, tokens) {

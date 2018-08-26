@@ -117,7 +117,7 @@ const controller = {
         const playersTokens = team.players.map((p) => p.token)
             .filter(function(value, index, self) {
                 return self.indexOf(value) === index;
-            }).filter((token) => { return (token !== message.token && token); });
+            });
         notificationService.createAndSendMessages(team.name,
             user.username + " иска да се присъедини", playersTokens);
     },
