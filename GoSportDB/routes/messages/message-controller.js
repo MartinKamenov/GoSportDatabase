@@ -93,7 +93,7 @@ const controller = {
         const uniqueTokens = collection.map((m) => m.token)
             .filter(function(value, index, self) {
                 return self.indexOf(value) === index;
-            }).filter((token) => { return (token !== message.token && token) });
+            }).filter((token) => { return (token !== message.token && token); });
 
         notificationService.createAndSendMessages(message.username, message.text, uniqueTokens);
     }

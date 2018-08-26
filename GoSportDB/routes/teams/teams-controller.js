@@ -1,5 +1,6 @@
 const datetime = require('../../models/DateTime');
 const Team = require('../../models/Team');
+const notificationService = require('../../models/services/notificationService');
 
 const controller = {
     showAllTeams(req, res, teamRepository) {
@@ -103,12 +104,21 @@ const controller = {
                 }
                 team.requestingPlayers.push(user);
                 teamRepository.removeTeam(teamId).then(() => {
-                    teamRepository.insertTeam(team).then((teams) => {
-                        res.send(teams[0]);
+                    teamRepository.insertTeam(team).then(() => {
+                        this.notifyForRequest(team, user);
+                        res.send(team);
                     });
                 })
             });
         })
+    },
+    notifyForRequest(team, user) {
+        const playersTokens = team.players.map((p) => p.token)
+            .filter(function(value, index, self) {
+                return self.indexOf(value) === index;
+            }).filter((token) => { return (token !== message.token && token); });
+        notificationService.createAndSendMessages(team.name,
+            user.username + " иска да се присъедини", playersTokens);
     },
     joinPlayer(req, res, teamRepository, userRepository) {
         const userId = +req.body.id;
@@ -128,13 +138,15 @@ const controller = {
                     username: user.username,
                     email: user.email,
                     city: user.city,
-                    profileImg: user.profileImg
+                    profileImg: user.profileImg,
+                    token: user.token
                 });
                 teamRepository.removeTeam(teamId).then(() => {
                     teamRepository.insertTeam(team).then(() => {
                         user.teams.push(team);
                         userRepository.removeUser(user.id).then(() => {
                             userRepository.insertUser(user).then(() => {
+                                this.notifyForJoin(team, user);
                                 res.send(team);
                             });
                         });
@@ -142,6 +154,11 @@ const controller = {
                 });
             });
         });
+    },
+    notifyForJoin(team, user) {
+        const playerToken = user.token;
+        notificationService.createAndSendMessage(team.name,
+            "Заявката ви за присъединяване беше приета.", playerToken);
     },
     rejectPlayer(req, res, teamRepository, userRepository) {
         const userId = +req.body.id;
