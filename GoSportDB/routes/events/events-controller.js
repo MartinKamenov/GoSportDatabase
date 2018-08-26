@@ -1,6 +1,8 @@
 const Event = require('../../models/Event');
 const Location = require('../../models/Location');
 const datetime = require('../../models/DateTime');
+const notificationService = require('../../models/services/notificationService');
+
 const controller = {
     showEvents(req, res, eventRepository) {
         eventRepository.getAllEvents()
@@ -96,12 +98,11 @@ const controller = {
                 email: user.email,
                 username: user.username,
                 city: user.city,
-                profileImg: user.profileImg
+                profileImg: user.profileImg,
+                token: user.token
             };
 
             players.push(mappedUser);
-
-
 
             const event = new Event(id, name, sport, datetime,
                 location, mappedUser, neededPlayers,
@@ -119,6 +120,7 @@ const controller = {
                         userRepository.insertUser(user).then(() => {
                             eventRepository.insertEvent(event)
                                 .then(() => {
+
                                     res.send(event);
                                     return;
                                 })
@@ -148,7 +150,8 @@ const controller = {
                 username: user.username,
                 city: user.city,
                 profileImg: user.profileImg,
-                password: user.password
+                password: user.password,
+                token: user.token
             };
 
             eventRepository.findEventByParams({ id: eventId }).then((events) => {
@@ -175,6 +178,7 @@ const controller = {
                             user.events.push(event);
                             userRepository.removeUser(user.id).then(() => {
                                 userRepository.insertUser(user).then(() => {
+                                    this.notifyPlayersForNewPlayer(event, user);
                                     res.send(event);
                                     return;
                                 });
@@ -188,12 +192,20 @@ const controller = {
         });
 
     },
+    notifyPlayersForNewPlayer(event, player) {
+        const mappedTokens = event.players.map((m) => m.token)
+            .filter(function(value, index, self) {
+                return self.indexOf(value) === index;
+            }).filter((token) => { return (token !== player.token && token); });
+        notificationService.createAndSendMessages(event.name,
+            player.username + ' се присъедини към събитието.', mappedTokens);
+    },
     deleteEvent(req, res, eventRepository) {
         eventRepository.removeEvent(id)
             .then(() => {
                 res.send("Event deleted");
                 return;
-            })
+            });
     }
 }
 
