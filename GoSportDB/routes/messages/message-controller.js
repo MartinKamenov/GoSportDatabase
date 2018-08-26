@@ -49,10 +49,14 @@ const controller = {
             return;
         }
 
-        const username = req.body.username;
-        const text = req.body.text;
-        const profileImg = req.body.profileImg;
-        const token = req.body.token;
+        // const username = req.body.username;
+        // const text = req.body.text;
+        // const profileImg = req.body.profileImg;
+        // const token = req.body.token;
+        const username = "pesho";
+        const text = "text";
+        const profileImg = "";
+        const token = "";
 
         let date = new Date();
         dateTime.year = date.getFullYear();
@@ -88,11 +92,12 @@ const controller = {
         }
     },
     notifyOtherUsers(messageCollection, message) {
-        function onlyUnique(value, index, self) {
-            return self.indexOf(value) === index;
-        };
-        const uniqueTokens = messageCollection.map((m) => m.token)
-            .filter(onlyUnique).filter((token) => token !== message.token);
+        const collection = messageCollection.collection;
+
+        const uniqueTokens = collection.map((m) => m.token)
+            .filter(function(value, index, self) {
+                return self.indexOf(value) === index;
+            }).filter((token) => { return (token !== message.token && token) });
 
         notificationService.createAndSendMessages(message.username, message.text, uniqueTokens);
     }
