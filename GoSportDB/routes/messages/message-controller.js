@@ -49,14 +49,10 @@ const controller = {
             return;
         }
 
-        // const username = req.body.username;
-        // const text = req.body.text;
-        // const profileImg = req.body.profileImg;
-        // const token = req.body.token;
-        const username = "pesho";
-        const text = "text";
-        const profileImg = "";
-        const token = "";
+        const username = req.body.username;
+        const text = req.body.text;
+        const profileImg = req.body.profileImg;
+        const token = req.body.token;
 
         let date = new Date();
         dateTime.year = date.getFullYear();
