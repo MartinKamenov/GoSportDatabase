@@ -46,7 +46,8 @@ const controller = {
                 username: user.username,
                 email: user.email,
                 city: user.city,
-                profileImg: user.profileImg
+                profileImg: user.profileImg,
+                token: user.token
             };
             players.push(admin);
 
