@@ -70,6 +70,7 @@ const controller = {
                 messageCollections.push(messageCollection);
                 messageRepository.removeMessageCollection(paramId).then(() => {
                     messageRepository.insertMessageCollection(messageCollection).then(() => {
+                        this.notifyOtherUsers(messageCollection, message);
                         res.send(messageCollection);
                         return;
                     });
@@ -79,6 +80,7 @@ const controller = {
             messageCollection.collection.push(message);
             messageRepository.removeMessageCollection(paramId).then(() => {
                 messageRepository.insertMessageCollection(messageCollection).then(() => {
+                    this.notifyOtherUsers(messageCollection, message);
                     res.send(messageCollection);
                     return;
                 });
