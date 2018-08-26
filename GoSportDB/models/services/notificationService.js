@@ -16,7 +16,7 @@ const service = {
 
     createAndSendMessages(title, body, tokens) {
         var message = {
-            to: tokens,
+            registration_ids: tokens,
             notification: { title, body }
         };
 
