@@ -1,6 +1,7 @@
 const MessageCollection = require('../../models/MessageCollection');
 const Message = require('../../models/Message');
 const dateTime = require('../../models/DateTime');
+const notificationService = require('../../models/services/notificationService');
 
 let messageCollections = [];
 
@@ -87,13 +88,11 @@ const controller = {
     notifyOtherUsers(messageCollection, message) {
         function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
-        }
-        const uniqueTokens = messageCollection.map((m) => m.token).filter(onlyUnique);
-        uniqueTokens.forEach(token => {
-            if (token !== message.token) {
-                // Notify users
-            }
-        });
+        };
+        const uniqueTokens = messageCollection.map((m) => m.token)
+            .filter(onlyUnique).filter((token) => { token !== message.token });
+
+        notificationService.createAndSendMessages(message.username, message.text, uniqueTokens);
     }
 }
 
