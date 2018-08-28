@@ -29,7 +29,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 usersRoute(app, userRepository, idGenerator);
-eventsRoute(app, eventRepository, userRepository, idGenerator);
+eventsRoute(app, eventRepository, userRepository, teamRepository, idGenerator);
 messageRoute(app, messageRepository);
 teamsRoute(app, teamRepository, userRepository, idGenerator);
 

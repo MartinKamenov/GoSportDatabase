@@ -62,7 +62,7 @@ const controller = {
         });
         //const events = await Promise.resolve(eventRepository.findEventByParams.bind(eventRepository));
     },
-    createEvent(req, res, eventRepository, userRepository, idGenerator) {
+    createEvent(req, res, eventRepository, userRepository, teamRepository, idGenerator) {
         const id = idGenerator.getEventId();
         const name = req.body.name;
         const sport = req.body.sport;
@@ -82,8 +82,11 @@ const controller = {
         const location = new Location(longitude, latitude, address);
         const adminId = +req.body.adminId;
         const neededPlayers = +req.body.neededPlayers;
+        let teamIds = req.body.teamIds;
+        if (!teamIds) {
+            teamIds = null;
+        }
         const players = [];
-
 
         userRepository.findUserById(adminId).then((foundUsers) => {
             if (foundUsers.length !== 1) {
@@ -106,7 +109,7 @@ const controller = {
 
             const event = new Event(id, name, sport, datetime,
                 location, mappedUser, neededPlayers,
-                players);
+                players, teamIds);
 
             eventRepository.findEventByParams({ location, sport, datetime })
                 .then((events) => {
@@ -120,7 +123,9 @@ const controller = {
                         userRepository.insertUser(user).then(() => {
                             eventRepository.insertEvent(event)
                                 .then(() => {
-
+                                    if (teamIds) {
+                                        this.notifyPlayersFromTeams(event, teamRepository, teamIds);
+                                    }
                                     res.send(event);
                                     return;
                                 })
@@ -131,6 +136,31 @@ const controller = {
                         });
                     });
                 });
+        });
+    },
+    notifyPlayersFromTeams(event, teamRepository, teamIds) {
+        teamRepository.getAllTeams().then((teams) => {
+            const filteredTeams = teams.filter(function(t) {
+                const foundTeam = teamIds.find((id) => id === t.id);
+                if (foundTeam) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            const playersTokens = [];
+            filteredTeams.forEach((t) => {
+                const players = t.players;
+                players.map(p => p.token).forEach((t) => {
+                    if (!playersTokens.indexOf(t) < 0) {
+                        playersTokens.push(t);
+                    }
+                });
+            });
+
+            notificationService.createAndSendMessages(event.sport,
+                event.admin.username + " Ви покани да се присъедините", playersTokens);
         });
     },
     addUserToEvent(req, res, eventRepository, userRepository) {
