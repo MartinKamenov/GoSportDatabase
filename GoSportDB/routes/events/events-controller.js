@@ -148,16 +148,19 @@ const controller = {
 
                 return false;
             });
+            const adminToken = event.admin.token;
 
             const playersTokens = [];
             filteredTeams.forEach((t) => {
                 const players = t.players;
                 players.map(p => p.token).forEach((t) => {
-                    if (!playersTokens.indexOf(t) < 0) {
+                    if (playersTokens.indexOf(t) < 0 && adminToken !== t && t) {
                         playersTokens.push(t);
                     }
                 });
             });
+
+            console.log(playersTokens);
 
             notificationService.createAndSendMessages(event.sport,
                 event.admin.username + " Ви покани да се присъедините", playersTokens);
