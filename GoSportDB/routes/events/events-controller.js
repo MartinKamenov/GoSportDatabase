@@ -27,6 +27,7 @@ const controller = {
                         admin: e.admin,
                         neededPlayers: e.neededPlayers,
                         players: e.players,
+                        teamIds: e.teamIds
                     }
                 });
                 res.send(mappedEvents);
