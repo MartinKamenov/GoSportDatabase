@@ -199,14 +199,22 @@ const controller = {
 
                 const event = events[0];
                 if (!event.teamIds || event.teamIds.length === 0) {
-                    this._addPlayerToEvent(req, res, userRepository, eventRepository, mappedUser, event, null);
+                    this._addPlayerToEvent(req, res, eventId,
+                        userId, userRepository, eventRepository,
+                        mappedUser, event, user, null);
                 } else {
                     teamRepository.getAllTeams().then((teams) => {
-                        const playerIds = [].concat((teams.filter((t) => {
-                            return event.teamIds.find((i) => i === t.id);
-                        })).map((t) => t.players)).map((p) => p.id);
+                        const playerIds = [].concat(...(teams.filter((t) => {
+                                    return event.teamIds.find((i) => i === t.id);
+                                }))
+                                .map((t) => t.players))
+                            .map((p) => p.id).filter(function(value, index, self) {
+                                return self.indexOf(value) === index;
+                            });
                         // Calls with parameter for ids of players who can participate
-                        this._addPlayerToEvent(req, res, userRepository, eventRepository, mappedUser, event, playerIds);
+                        this._addPlayerToEvent(req, res, eventId,
+                            userId, userRepository, eventRepository,
+                            mappedUser, event, user, playerIds);
                     });
                 }
             });
@@ -214,7 +222,9 @@ const controller = {
 
     },
 
-    _addPlayerToEvent(req, res, userRepository, eventRepository, mappedUser, event, playerIds) {
+    _addPlayerToEvent(req, res, eventId,
+        userId, userRepository, eventRepository,
+        mappedUser, event, user, playerIds) {
         if (playerIds && (playerIds.indexOf(mappedUser.id) < 0)) {
             res.send('Събитието е ограничено само за някои отбори');
             return;
@@ -222,7 +232,7 @@ const controller = {
         if (event.neededPlayers == -1 ||
             event.players.length < event.neededPlayers) {
             for (let i = 0; i < event.players.length; i += 1) {
-                if (event.players[i].id == userId) {
+                if (event.players[i].id === userId) {
                     res.send('Already in the event');
                     return;
                 }
