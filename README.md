@@ -11,3 +11,7 @@
 - Json as way of keeping data
 - Express
 - MongoDB
+
+#### Contributors
+- Martin Kamenov https://github.com/MartinKamenov
+- Ivailo Dinev https://github.com/IvoDInev
