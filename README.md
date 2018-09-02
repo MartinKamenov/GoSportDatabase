@@ -4,7 +4,7 @@
 
 #### How to run:
 - Npm install (You need nodeJs to start)
-- Npm start
+- Npm start in the GoSportDatabase folder
 
 #### What do we use:
 - NodeJs as backend
