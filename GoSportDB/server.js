@@ -10,6 +10,7 @@ const UserRepository = require('./models/repositories/UserRepository');
 const EventRepository = require('./models/repositories/EventRepository');
 const MessageRepository = require('./models/repositories/MessageRepository');
 const TeamRepository = require('./models/repositories/TeamsRepository');
+const CustomLocationRepository = require('./models/repositories/CustomLocationRepository');
 const IdGenerator = require('./models/IdGenerator');
 const usersRoute = require('./routes/users/users-route');
 const eventsRoute = require('./routes/events/events-route');
