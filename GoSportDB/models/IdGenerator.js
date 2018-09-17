@@ -1,5 +1,5 @@
 class IdGenerator {
-    constructor(userRepository, eventRepository, teamRepository) {
+    constructor(userRepository, eventRepository, teamRepository, customLocationRepository) {
         userRepository.getAllUsers()
             .then((users) => {
                 if (users.length == 0) {
@@ -27,6 +27,15 @@ class IdGenerator {
                     this.teamId = +sortedTeams[0].id;
                 }
             });
+        customLocationRepository.getAllCustomLocations()
+            .then((locations) => {
+                if (locations.length == 0) {
+                    this.locationId = 0;
+                } else {
+                    const sortedLocations = locations.sort((a, b) => b.id - a.id);
+                    this.locationId = +sortedLocations[0].id;
+                }
+            });
     }
 
     getUserId() {
@@ -37,6 +46,9 @@ class IdGenerator {
     }
     getTeamId() {
         return ++this.teamId;
+    }
+    getCustomLocationId() {
+        return ++this.locationId;
     }
 }
 

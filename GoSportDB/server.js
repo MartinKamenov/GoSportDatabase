@@ -16,12 +16,14 @@ const usersRoute = require('./routes/users/users-route');
 const eventsRoute = require('./routes/events/events-route');
 const messageRoute = require('./routes/messages/message-route');
 const teamsRoute = require('./routes/teams/teams-route');
+const locationRoute = require('./routes/custom_locations/locations-route');
 
 const userRepository = new UserRepository(database, 'users');
 const eventRepository = new EventRepository(database, 'events');
 const messageRepository = new MessageRepository(database, 'messages');
 const teamRepository = new TeamRepository(database, 'teams');
-const idGenerator = new IdGenerator(userRepository, eventRepository, teamRepository);
+const customLocationRepository = new CustomLocationRepository(database, 'customLocations');
+const idGenerator = new IdGenerator(userRepository, eventRepository, teamRepository, customLocationRepository);
 
 app.use(express.static(__dirname + '../'));
 app.use('/static', express.static(path.join(__dirname, './static')));
@@ -33,5 +35,6 @@ usersRoute(app, userRepository, idGenerator);
 eventsRoute(app, eventRepository, userRepository, teamRepository, idGenerator);
 messageRoute(app, messageRepository);
 teamsRoute(app, teamRepository, userRepository, idGenerator);
+locationRoute(app, customLocationRepository, idGenerator);
 
 app.listen(process.env.PORT || 5000);
