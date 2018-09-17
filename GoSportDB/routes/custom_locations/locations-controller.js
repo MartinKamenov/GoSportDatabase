@@ -1,9 +1,7 @@
 const controller = {
-    // Implement using await
-    showAllCustomLocations(req, res, customLocationRepository) {
-        customLocationRepository.getAllCustomLocations().then((locations) => {
-            res.send(locations);
-        });
+    async showAllCustomLocations(req, res, customLocationRepository) {
+        const locations = await customLocationRepository.getAllCustomLocations();
+        res.send(locations);
     }
 }
 
