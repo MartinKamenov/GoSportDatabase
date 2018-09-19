@@ -6,6 +6,9 @@ const attach = (app, customLocationRepository, idGenerator) => {
     router
         .get('/', (req, res) => {
             controller.showAllCustomLocations(req, res, customLocationRepository);
+        })
+        .post('/addLocation', (req, res) => {
+            controller.addCustomLocationToPending(req, res, customLocationRepository, idGenerator);
         });
     app.use('/locations', router);
 }
