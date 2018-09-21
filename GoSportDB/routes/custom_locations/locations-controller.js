@@ -24,6 +24,20 @@ const controller = {
         await customLocationRepository.insertCustomLocation(location);
         res.send(location);
     },
+    async approveLocation(req, res, customLocationRepository) {
+        const id = +req.body.id;
+        const customLocations = await customLocationRepository.findCustomLocationById(id);
+        const customLocation = customLocations[0];
+        await customLocationRepository.removeCustomLocation(id);
+        customLocation.approved = true;
+        await customLocationRepository.insertCustomLocation(customLocation);
+        res.send(customLocation);
+    },
+    async rejectLocation(req, res, customLocationRepository) {
+        const id = +req.body.id;
+        await customLocationRepository.removeCustomLocation(id);
+        res.send("Removed location with id" + id);
+    },
     uploadPicture(img, fileName) {
         const pathToProfile = "/static/images/locations/";
 

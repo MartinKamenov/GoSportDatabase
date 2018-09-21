@@ -12,6 +12,10 @@ class CustomLocationRepository {
         return this.database.insert(this.collectionName, customLocation);
     }
 
+    findCustomLocationById(id) {
+        return this.database.find(this.collectionName, { id });
+    }
+
     removeCustomLocation(id) {
         return this.database.delete(this.collectionName, { id });
     }
