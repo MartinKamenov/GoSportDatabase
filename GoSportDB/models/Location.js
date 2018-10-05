@@ -13,7 +13,5 @@ class Location {
         this.pictureUrl = pictureUrl;
         this.approved = false;
     }
-
-
 }
 module.exports = Location;

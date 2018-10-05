@@ -268,6 +268,22 @@ const controller = {
                 res.send("Event deleted");
                 return;
             });
+    },
+
+    async removeUserFromEvent(req, res, eventRepository) {
+        const userId = +req.body.userId;
+        const eventId = +req.params.id;
+        const events = await eventRepository.findEventById(eventId);
+        if (events.length !== 1) {
+            res.send('More or less than one event found.');
+        }
+
+        const event = events[0];
+        const filteredPlayers = event.players.filter(function(p) { return p.id !== userId });
+        event.players = filteredPlayers;
+        await eventRepository.removeEvent(eventId);
+        await eventRepository.insertEvent(event);
+        res.send(event);
     }
 }
 

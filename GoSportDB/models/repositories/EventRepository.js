@@ -12,6 +12,9 @@ class EventRepository {
     findEventByParams(params) {
         return this.database.find(this.collectionName, params);
     }
+    findEventById(id) {
+        return this.database.find(this.collectionName, { id });
+    }
 
     removeEvent(id) {
         return this.database.delete(this.collectionName, { id });
