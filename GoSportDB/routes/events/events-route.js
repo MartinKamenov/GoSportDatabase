@@ -14,6 +14,9 @@ const attach = (app, eventRepository, userRepository, teamRepository, idGenerato
         })
         .post('/:id/addUserToEvent', (req, res) => {
             controller.addUserToEvent(req, res, eventRepository, userRepository, teamRepository);
+        })
+        .post('/:id/removeUserFromEvent', (req, res) => {
+            controller.removeUserFromEvent(req, res, eventRepository);
         });
     app.use('/events', router);
 }
