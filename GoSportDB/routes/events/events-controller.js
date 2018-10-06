@@ -161,6 +161,8 @@ const controller = {
                 });
             });
 
+            console.log(playersTokens);
+
             notificationService.createAndSendMessages(event.sport,
                 event.admin.username + " Ви покани да се присъедините", playersTokens);
         });
