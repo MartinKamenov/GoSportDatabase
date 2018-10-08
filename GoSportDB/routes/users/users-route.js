@@ -14,9 +14,6 @@ const attach = (app, userRepository, idGenerator) => {
         .post('/register', (req, res) => {
             controller.register(req, res, userRepository, idGenerator);
         })
-        .get('/users', (req, res) => {
-            controller.showUsers(req, res, userRepository);
-        })
         .get('/users/:id', (req, res) => {
             controller.showUser(req, res, userRepository);
         })
